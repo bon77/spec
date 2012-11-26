@@ -86,6 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}
 %{_mandir}
 %{_libdir}
+%exclude %{_libdir}/libruby-static.a
+%exclude %{_libdir}/libruby.so
 
 %files ri
 %defattr(-, root, root)
