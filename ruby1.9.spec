@@ -45,7 +45,7 @@ along with a list of the methods the class or module implements.
 %package devel
 Summary:	A Ruby development environment.
 Group:		Development/Languages
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 conflicts: ruby-devel
 
 %description devel
