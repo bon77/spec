@@ -41,8 +41,19 @@ ri is a command line tool that displays descriptions of built-in
 Ruby methods, classes and modules. For methods, it shows you the calling
 sequence and a description. For classes and modules, it shows a synopsis
 along with a list of the methods the class or module implements.
+
+%package devel
+Summary:	A Ruby development environment.
+Group:		Development/Languages
+Requires:	%{name}-libs = %{version}-%{release}
+conflicts: ruby-devel
+
+%description devel
+Header files and libraries for building a extension library for the
+Ruby or an application embedded Ruby.
+
 %prep
-%setup -n ruby-%{rubyxver}%{rubyyver}-%{rubyzver}
+%setup -q -n ruby-%{rubyxver}%{rubyyver}-%{rubyzver}
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS -Wall -fno-strict-aliasing"
@@ -59,6 +70,13 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 # Don't need this
 rm -rf $RPM_BUILD_ROOT/usr/src
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/ripper/defs/keywords
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/ripper/parse.c
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/syck/\<stdout\>
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/syck/bytecode.re
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/syck/gram.y
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/syck/implicit.re
+rm -rf $RPM_BUILD_ROOT/usr/lib/ruby-1.9.3-p327/ext/syck/token.re
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,11 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, root)
 %{_bindir}
-%{_includedir}
 %{_mandir}
 %{_libdir}
 
-%files ri 
+%files ri
 %defattr(-, root, root)
 %doc %{_datadir}/ri
 
@@ -78,6 +95,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 %doc %{_defaultdocdir}
 
+%files devel
+%defattr(-, root, root)
+%{_includedir}
+%{_libdir}/libruby-static.a
+%{_libdir}/libruby.so
+
 %changelog
+* Mon Nov 26 2012 Björn Henkel <bjoern.henkel@gmail.com> - 1.9.3-p324
+- split off devel package, because it conflicts with system ruby-devel libs
+
 * Fri Nov 16 2012 Björn Henkel <bjoern.henkel@gmail.com> - 1.9.3-p324
 - Initial package
