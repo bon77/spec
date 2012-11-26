@@ -1,16 +1,17 @@
 %define rubyxver    1.9
 %define rubyyver    .3
 %define rubyzver    p327
-%define dist        bbh
+%define rel         3
 
 Name:       ruby19
 Version:    %{rubyxver}%{rubyyver}
-Release:    %{rubyzver}%{?dist}
+Release:    %{rubyzver}.%{rel}%{?dist}
 License:    Ruby License/GPL - see COPYING
 URL:        http://www.ruby-lang.org/
 Summary:    An interpreter of object-oriented scripting language
 Group:      Development/Languages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Provides:   ruby(abi) = 1.9.1
 BuildRequires:	readline readline-devel ncurses ncurses-devel glibc-devel tcl-devel autoconf gcc unzip openssl-devel db4-devel byacc libyaml-devel
 Source0: ftp://ftp.ruby-lang.org/pub/ruby/%{rubyxver}/ruby-%{rubyxver}%{rubyyver}-%{rubyzver}.tar.gz
 
